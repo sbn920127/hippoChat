@@ -1,0 +1,39 @@
+@import "./var";
+
+.btn {
+  border: $border;
+  padding: $input-gutter-y $btn-gutter-x;
+  border-radius: .4rem;
+  background-color: transparent;
+  &:focus {
+    outline-width: 0;
+    box-shadow: 0 0 0 .4rem $purple-300;
+  }
+  &-primary {
+    color: white;
+    background-color: $primary;
+    &:hover {
+      color:white;
+      background-color: $purple-600;
+    }
+  }
+  &-sm {
+    font-size: 1.4rem;
+    padding: .4rem 1.5rem;
+  }
+}
+
+.btn-rounded {
+  border-radius: $rounded-pill;
+}
+
+.link {
+  border-width: 0;
+  background-color: transparent;
+  &:focus {
+    outline-width: 0;
+  }
+  &:hover {
+    color: $primary;
+  }
+}

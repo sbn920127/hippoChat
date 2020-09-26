@@ -1,0 +1,58 @@
+@import "../../sass/var";
+
+.chat-row {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+@media only screen and (max-width: 639px) {
+  .chat-control, .chat-space {
+    display: none;
+    transition: transform .6s ease-in-out;
+    &.ready, &.active {
+      display: block;
+    }
+  }
+  .chat-control {
+    &.active {
+      &.go {
+        transform: translateX(-100%);
+      }
+    }
+    &.ready {
+      &:not(.go) {
+        transform: translateX(-100%);
+      }
+    }
+  }
+  .chat-space {
+    &.active {
+      &.go {
+        transform: translateX(100%);
+      }
+    }
+    &.ready {
+      &:not(.go) {
+        transform: translateX(100%);
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .chat-row {
+    display: flex;
+    &::after {
+      content: '';
+    }
+  }
+}
+
+
+

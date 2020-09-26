@@ -1,0 +1,54 @@
+@import "../../sass/var";
+
+//$theme-colors: (
+//  "danger": ($danger-text, $danger-border, $danger-bg),
+//  "success": ($success-text, $success-border, $success-bg),
+//  "warning": ($warning-text, $warning-border, $warning-bg),
+//  "info": ($info-text, $info-border, $info-bg)
+//);
+
+
+.alert {
+  text-align: left;
+  padding: $gutter 6rem $gutter $gutter;
+  border: $border;
+  border-radius: $border-radius;
+  margin-bottom: 2rem;
+  position: relative;
+  > p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &-danger {
+    color: $danger-text;
+    border-color: $danger-border;
+    background-color: $danger-bg;
+  }
+  &-success {
+    color: $success-text;
+    border-color: $success-border;
+    background-color: $success-bg;
+  }
+  &-warning {
+    color: $warning-text;
+    border-color: $warning-border;
+    background-color: $warning-bg;
+  }
+  &-info {
+    color: $info-text;
+    border-color: $info-border;
+    background-color: $info-bg;
+  }
+}
+
+//@each $name, $values in $theme-colors {
+//  .alert-#{$name} {
+//    @each $text, $border, $bg in $values {
+//      #{border-color}: $border;
+//      #{color}: $text;
+//      #{background-color}: $bg;
+//    }
+//  }
+//}
+

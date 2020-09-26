@@ -1,0 +1,34 @@
+@import "../../sass/var";
+
+.logout {
+  color: $gray-900;
+  border-width: 0;
+  background-color: transparent;
+  padding: $input-gutter-y 2rem;
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 80%;
+    height: 10px;
+    border-radius: $rounded-pill;
+    background-color: $purple-200;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0) scale(0);
+    transform-origin: bottom center;
+    transition: all .3s ease-in-out;
+    z-index: -1;
+  }
+  &:hover {
+    &::after {
+      bottom: 50%;
+      transform: translate(-50%, 50%) scale(1);
+    }
+  }
+  &:focus {
+    outline-width: 0;
+  }
+}
+

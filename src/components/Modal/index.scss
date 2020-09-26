@@ -1,0 +1,88 @@
+@import "../../sass/var";
+@import "../../sass/button";
+
+.modal {
+  width: 100%;
+  max-width: 510px;
+  padding: $gutter;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1010;
+  &-inner {
+    width: 100%;
+    min-height: 20rem;
+    position: relative;
+    background-color: white;
+    border-radius: $border-radius;
+  }
+  &-content {
+    padding: $gutter $gutter 1.5rem;
+  }
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(black, .5);
+    z-index: 1009;
+  }
+  &-format {
+
+  }
+  &-header {
+    padding: 3rem 2rem 1.5rem;
+    position: relative;
+    > h1 {
+      letter-spacing: .2rem;
+      color: $purple-600;
+      margin-bottom: 0;
+      &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        height: 1px;
+        background-color: $primary;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        animation: move 2s 1s linear;
+      }
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: left;
+  }
+  32% {
+    transform: translateX(-50%) scaleX(1);
+    transform-origin: left;
+  }
+  72% {
+    transform: translateX(-50%) scaleX(1);
+    transform-origin: right;
+  }
+  100% {
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: right;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .modal {
+    .header {
+      padding: 4rem 2rem 2rem;
+      > h1 {
+        font-size: 3.4rem;
+      }
+    }
+  }
+
+}

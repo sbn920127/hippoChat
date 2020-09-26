@@ -1,0 +1,35 @@
+@import "../../sass/var";
+
+$grid-gutter-width: 1.6rem;
+
+.members {
+  .container {
+    min-height: 100vh;
+    padding-top: 5rem;
+
+  }
+  .row {
+    margin-left: $grid-gutter-width / -2;
+    margin-right: $grid-gutter-width / -2;
+    > {
+      [class*="col"] {
+        padding-left: $grid-gutter-width / 2;
+        padding-right: $grid-gutter-width / 2;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+.bg-gray {
+  background-color: #ACD7F6;
+}
+
+@media only screen and (max-width: 767px){
+  .members {
+    .container {
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
+  }
+}

@@ -1,0 +1,122 @@
+@import "../../sass/var";
+
+.header {
+  width: 100%;
+  position: relative;
+  z-index: 1020;
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0 0 0 auto;
+  &bar {
+    display: flex;
+    align-items: center;
+    &-brand {
+      font-size: 3rem;
+      font-weight: bold;
+      padding: 1rem;
+    }
+  }
+  &-link {
+    color: $gray-900;
+    letter-spacing: .2rem;
+    position: relative;
+    display: block;
+    padding: $input-gutter-y 2rem;
+    transition: color .3s 0s;
+    &:hover {
+      color: $gray-900;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .burger-menu {
+    display: none;
+  }
+  .nav {
+    &bar {
+      padding-right: 2rem;
+      padding-left: 2rem;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
+                  rgba(0, 0, 0, 0.10) 0px 4px 5px 0px,
+                  rgba(0, 0, 0, 0.08) 0px 1px 10px 0px;
+    }
+    &-link {
+      &::after {
+        content: '';
+        display: block;
+        width: 80%;
+        height: 10px;
+        border-radius: $rounded-pill;
+        background-color: $purple-200;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 0) scale(0);
+        transform-origin: bottom center;
+        transition: all .3s ease-in-out;
+        z-index: -1;
+      }
+      &:hover {
+        &::after {
+          bottom: 50%;
+          transform: translate(-50%, 50%) scale(1);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .burger-menu {
+    margin-left: auto;
+    padding: 2rem;
+  }
+  .nav {
+    padding-top: 10rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    order: 1;
+    transform: translateX(100%);
+    transition: transform .3s ease-in-out;
+    &-active {
+      composes: nav;
+      transform: translateX(0);
+    }
+    &bar {
+      flex-wrap: wrap;
+      &-brand {
+        padding-left: 2rem;
+      }
+    }
+    &-item {
+      width: 100%;
+      text-align: center;
+    }
+    &-link {
+      width: 100%;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+}
+

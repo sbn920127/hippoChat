@@ -1,0 +1,33 @@
+@import "../../sass/var";
+
+.inner {
+  min-height: calc(100vh - 71px);
+  position: relative;
+  &::before {
+    content: "";
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .inner {
+    &::before {
+      content: "";
+      display: block;
+      width: 41.66667%;
+      height: 100%;
+      background-color: $primary;
+      z-index: 200;
+      position: absolute;
+      left: 58.33333%;
+      top: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .inner {
+    display: flex;
+    flex-direction: column;
+  }
+}

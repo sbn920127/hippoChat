@@ -1,0 +1,114 @@
+// 文字多重陰影 $precision 陰影位移距離，數字越大越近
+@function textShadow($precision, $size, $color) {
+  $value: null;
+  $offset: 0;
+  $length: $size * (1 / $precision) - 1;
+
+  @for $i from 0 through $length {
+    $offset: $offset + $precision;
+    $shadow: $offset + px $offset + px $color;
+    $value: append($value, $shadow, comma);
+  }
+
+  @return $value;
+}
+
+// 垂直置中
+@mixin vertical-center() {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// 絕對定位
+@mixin abs-pos ($top: auto, $left: auto, $bottom: $top, $right: $left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  bottom: $bottom;
+  right: $right;
+}
+
+// 清除浮動
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 限制單行文字
+@mixin text-shorten {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 固定比例容器
+@mixin aspect-ratio($w, $h) {
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: ($h / $w) * 100%
+  }
+  > .inner-box {
+    @include abs-pos(0, 0);
+    margin: auto;
+  }
+}
+
+// 箭頭
+@mixin arrow($direction: down, $size: 6px, $border-size: 3px, $color: #666) {
+  display: block;
+  position: absolute;
+  width: $size * 2;
+  height: $size * 2;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    @include abs-pos(0, 0);
+    margin: auto;
+    width: $size;
+    height: $size;
+    border-color: $color;
+    border-style: solid;
+    border-width: $border-size $border-size 0 0;
+    @if ($direction == left) {
+      transform: rotate(45deg);
+    } @else if ($direction == down) {
+      transform: rotate(135deg);
+    } @else if ($direction == right) {
+      transform: rotate(-135deg);
+    } @else {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+// 三角形
+@mixin triangle($direction: down, $size: 5px, $color: #666) {
+  display: block;
+  width: 0;
+  height: 0;
+  @if ($direction == left) {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+  } @else if ($direction == right) {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+  } @else if ($direction == down) {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid $color;
+  } @else {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: $size solid $color;
+  }
+}

@@ -1,0 +1,192 @@
+@import "../../sass/var";
+
+main.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.form {
+  &.groupA {
+    left: 0;
+    transition: opacity 0s .4s;
+  }
+  &.groupB {
+    left: 41.66667%;
+    transition: opacity 0s .4s;
+  }
+}
+
+.box-inner {
+  width: 100%;
+  text-align: center;
+  background-color: $primary;
+  h2 {
+    letter-spacing: .2rem;
+    margin-bottom: 3rem;
+  }
+  .btn {
+    &-white-outline {
+      min-width: 18rem;
+      color: white;
+      border: 2px solid white;
+      background-color: transparent;
+    }
+  }
+}
+
+.text-white {
+  color: white;
+}
+
+.hide {
+  display: none !important;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-content {
+  text-align: center;
+  .btn {
+    display: inline-block;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@keyframes moveA {
+  0% {
+    left: 0;
+  }
+  50% {
+    transform: scaleX(1.4);
+  }
+  100% {
+    left: 58.33333%;
+    transform: scaleX(1);
+    z-index: 100;
+  }
+}
+
+@keyframes moveB {
+  0% {
+    left: 58.33333%;
+  }
+  50% {
+    transform: scaleX(1.4);
+  }
+  100% {
+    left: 0;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes moveFormA {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 41.66667%;
+  }
+}
+
+@keyframes moveFormB {
+  0% {
+    left: 41.66667%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .form {
+    width: 58.33333%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    &.groupA {
+      left: 0;
+      transition: opacity 0s .4s;
+    }
+    &.groupB {
+      left: 41.66667%;
+      transition: opacity 0s .4s;
+    }
+  }
+  .box {
+    width: 41.66667%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 300;
+    &.groupA {
+      right: 0;
+      transition: opacity .8s 0s linear;
+    }
+    &.groupB {
+      right:  58.33333%;
+      transition: opacity .8s 0s linear;
+    }
+    &-inner {
+      background-color: transparent;
+      h2 {
+        margin-bottom: 4rem;
+      }
+    }
+  }
+  .activeA {
+    &::before {
+      animation: moveA .8s ease-in-out forwards;
+    }
+    .form.groupA {
+      animation: moveFormB .4s linear forwards;
+    }
+    .form.groupB {
+      animation: moveFormA .4s linear forwards;
+      opacity: 0;
+    }
+    .box.groupB {
+      opacity: 0;
+      transition: opacity 0s .4s linear;
+    }
+  }
+  .activeB {
+    &::before {
+      left: 0;
+      animation: moveB .8s ease-in-out forwards;
+    }
+    .form.groupA {
+      opacity: 0;
+      animation: moveFormB .4s linear forwards;
+    }
+    .box.groupA {
+      opacity: 0;
+      transition: opacity 0s .4s linear;
+    }
+    .form.groupB {
+      animation: moveFormA .4s linear forwards;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .form {
+    order: 1;
+    padding: 3rem 2rem;
+  }
+  .box {
+    &-inner {
+      padding: 3rem 2rem;
+      h2 {
+        font-size: 2.4rem;
+      }
+    }
+  }
+}

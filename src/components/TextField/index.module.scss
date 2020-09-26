@@ -1,0 +1,47 @@
+@import "../../sass/var";
+$bg: #803BC9;
+$input-bg: #F5F9F9;
+
+.text-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.input-field {
+  width: 100%;
+  background-color: $input-bg;
+  border-radius: $border-radius;
+  position: relative;
+  .label {
+    position: absolute;
+    top: $gutter;
+    left: $gutter;
+    margin-bottom: 0;
+    transition: transform .3s ease;
+  }
+  .input {
+    width: 100%;
+    padding: $gutter;
+    border-width: 0;
+    background-color: transparent;
+    transition: padding .3s ease;
+    &:focus, &.writing {
+      padding-top: 2.4rem;
+      padding-bottom: 1rem;
+      outline-color: $purple-600;
+      ~ .label {
+        color: $purple-700;
+        transform: scale(.8) translateY(-50%);
+        transform-origin: top left;
+      }
+    }
+  }
+}
+
+.invalid-feedback {
+  font-size: 1.3rem;
+  color: $danger-text;
+  margin-top: .6rem;
+  padding-left: .4rem;
+}

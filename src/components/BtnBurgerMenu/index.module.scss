@@ -1,0 +1,70 @@
+.btn-menu {
+  border-width: 0;
+  background-color: transparent;
+  &:focus {
+    outline-width: 0;
+  }
+  &-active {
+    .burger-inner {
+      transform: translate3d(0, -10px, 0) rotate(-45deg);
+      transition-delay: .22s;
+      transition-timing-function: cubic-bezier(.215,.61,.355,1);
+      &::before {
+        top: 0;
+        transition: top .1s cubic-bezier(.33333,0,.66667,.33333) .16s,transform .13s cubic-bezier(.215,.61,.355,1) .25s;
+        transform: rotate(-90deg);
+      }
+      &::after {
+        top: 0;
+        transition: top .2s cubic-bezier(.33333,0,.66667,.33333),opacity .1s linear .22s;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+%bar {
+  width: 100%;
+  height: .4rem;
+  border-radius: .4rem;
+  background-color: #2d3748;
+  position: absolute;
+}
+
+.burger {
+  &-box {
+    width: 3.6rem;
+    height: 2.4rem;
+    position: relative;
+  }
+  &-inner {
+    @extend %bar;
+    bottom: 0;
+    transition: transform .13s .13s cubic-bezier(.55, .055, .675, .19);
+    &::before {
+      content: '';
+      display: block;
+      @extend %bar;
+      top: -1rem;
+      transition: top .12s cubic-bezier(.33333,.66667,.66667,1) .2s,
+        transform .13s cubic-bezier(.55,.055,.675,.19);
+    }
+    &::after {
+      content: '';
+      display: block;
+      @extend %bar;
+      top: -2rem;
+      transition: top .2s cubic-bezier(.33333,.66667,.66667,1) .2s,
+        opacity .1s linear;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .burger-menu {
+    opacity: .5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

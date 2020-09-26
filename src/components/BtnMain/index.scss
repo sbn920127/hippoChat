@@ -1,0 +1,60 @@
+@import "../../sass/var";
+
+.main-btn {
+  border-width: 0;
+  min-width: 180px;
+  text-align: center;
+  color: white;
+  background-color: $primary;
+  padding: $input-gutter-y $btn-gutter-x;
+  border-radius: $rounded-pill;
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  span {
+    z-index: 1;
+    position: relative;
+  }
+  &::before {
+    content: "";
+    display: block;
+    width: 120%;
+    height: 120%;
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    background-color: $purple-500;
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 0;
+    transition: opacity .3s 0s, transform .3s .3s linear;
+  }
+  &::after {
+    content: "";
+    display: block;
+    width: 120%;
+    height: 120%;
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    background-color: $purple-500;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .3s linear;
+  }
+  &:hover {
+    &::before {
+      opacity: 1;
+      transform: scaleY(0);
+      transition: opacity .3s .3s, transform .3s 0s linear;
+    }
+    &::after {
+      transform-origin: bottom;
+      transform: scaleY(1);
+    }
+  }
+  &:focus {
+    outline-width: 0;
+    box-shadow: 0 0 0 .4rem $purple-300;
+  }
+}

@@ -1,0 +1,165 @@
+@import "../../sass/var";
+
+.chat-space {
+  width: 100%;
+  float: left;
+  border-left: 1px solid $gray-300;
+  &-header {
+    padding: .4rem 1rem;
+    border-bottom: 1px solid $gray-300;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+.dialogue {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.dialog {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  > {
+    .avatar {
+      flex-shrink: 0;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+      > img {
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+      }
+    }
+    .say {
+      line-height: 1.5;
+      display: inline-block;
+      border-radius: 1.5rem;
+      padding: .8rem 1.2rem;
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        top: 1.2rem;
+        border-style: solid;
+        position: absolute;
+      }
+    }
+    .states {
+      color: $gray-700;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      margin-left: 1rem;
+      margin-bottom: .1rem;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+  }
+  &.remote {
+    justify-content: flex-start;
+    > {
+      .say {
+        background-color: #EFEFEE;
+        margin-left: 1.6rem;
+        &::before {
+          border-color: transparent #EFEFEE transparent transparent;
+          border-width: 0 1rem 1rem 0;
+          left: 0;
+          transform: translateX(-95%);
+        }
+      }
+      .states {
+        margin-left: .4rem;
+      }
+    }
+  }
+  &.local {
+    flex-direction: row-reverse;
+    > {
+      .say {
+        background-color: $purple-200;
+        margin-right: 1.6rem;
+        &::before {
+          border-color: transparent transparent transparent $purple-200;
+          border-width: 0 0 1rem 1rem;
+          right: 0;
+          transform: translateX(95%);
+        }
+      }
+      .states {
+        margin-right: .4rem;
+      }
+    }
+  }
+}
+
+.chat-input {
+  border-top: 1px solid $gray-300;
+  &-field {
+    textarea {
+      line-height: 1.5;
+      width: 100%;
+      border-width: 0;
+      padding: 1.5rem;
+      resize: none;
+      display: block;
+      &:focus {
+        outline-width: 0;
+      }
+    }
+  }
+  &-tool {
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.icon-btn {
+  font-size: 2rem;
+  padding: .5rem 1.2rem;
+  background-color: transparent;
+  border-width: 0;
+  &:focus {
+    outline-width: 0;
+  }
+  &:hover {
+    color: $primary;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .chat-space {
+    display: block;
+    float: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .chat-space {
+    &-header {
+      padding: 1.5rem;
+      .icon-btn {
+        display: none;
+        align-self: flex-end;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .chat-input {
+    display: flex;
+    &-field {
+      flex: 1 1;
+    }
+    &-tool {
+      flex-shrink: 0;
+      padding: 0 .8rem 0 0;
+    }
+  }
+}
