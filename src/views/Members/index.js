@@ -58,19 +58,13 @@ class Members extends React.Component{
         });
 
       if (!myselfIsFirst && !targetIsFirst) {
-        this.users.doc(id).get()
-          .then(doc => {
-            if (doc.exists) {
-              let target = doc.data();
-              return chats.add({
-                name: target.nickname,
-                avatar: target.avatar.url,
-                members: [currentUser.uid, id],
-                last_msg_id: null,
-                unread: 0
-              })
-            }
-          })
+        chats.add({
+          name: null,
+          avatar: null,
+          members: [currentUser.uid, id],
+          last_msg_id: null,
+          unread: 0
+        })
           .then(docRef => {
             const chatId = docRef.id;
 
@@ -82,7 +76,8 @@ class Members extends React.Component{
             });
 
             this.props.history.push('/chat');
-          })
+          });
+
       } else {
         this.props.history.push('/chat');
       }

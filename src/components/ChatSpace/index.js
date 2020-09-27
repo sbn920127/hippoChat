@@ -45,8 +45,9 @@ class ChatSpace extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      headerHeight: "auto",
       inputHeight: "auto",
-      dialogueHeight: 0,
+      dialogueHeight: "auto",
       text: '',
       dialogue: [
         {
@@ -67,24 +68,22 @@ class ChatSpace extends React.Component{
         }
       ]
     };
+    this._header = createRef();
     this.chatInputSection = createRef();
-    this.chatHeight = createRef();
     this.inputHandle = this.inputHandle.bind(this);
-    this.updateDimensions = this.updateDimensions.bind(this);
+    this.UpdateDimensions = this.UpdateDimensions.bind(this);
     this.submitHandle = this.submitHandle.bind(this);
   }
   componentDidMount() {
-    setTimeout(() => {
-      this.updateDimensions();
-    }, 600);
+    this.UpdateDimensions();
   }
-  updateDimensions() {
+  UpdateDimensions() {
     this.setState({
-      dialogueHeight: "auto"
+      headerHeight: this._header.current.clientHeight
     }, function () {
-      this.setState({
-        dialogueHeight: window.innerHeight - (this.props.headerHeight + this.chatInputSection.current.clientHeight + this.chatHeight.current.clientHeight + 2)
-      });
+      this.setState(state => ({
+        dialogueHeight: window.innerHeight - (this.props.headerHeight + this.chatInputSection.current.clientHeight + state.headerHeight + 2)
+      }));
     });
   }
   inputHandle(e) {
@@ -116,8 +115,8 @@ class ChatSpace extends React.Component{
     }
     return (
       <section className={"chat-space" + " " + this.props.className}>
-        <header className="chat-space-header" ref={this.chatHeight}>
-          <button className="icon-btn" onClick={this.props.toList}><i className="fa fa-chevron-left"></i></button>
+        <header ref={this._header} className="chat-space-header">
+          <button className="icon-btn" onClick={this.props.toList}><i className="fa fa-chevron-left"/></button>
           <h4 className="user-name">心機鬼</h4>
         </header>
         <div className="chat-space-body">
@@ -133,11 +132,11 @@ class ChatSpace extends React.Component{
                 onChange={this.inputHandle}
                 onKeyPress={this.submitHandle}
                 style={{height: this.state.inputHeight}}
-              ></textarea>
+              />
             </div>
             <div className="chat-input-tool">
-              <button className="icon-btn" title="傳送檔案"><i className="fa fa-paperclip"></i></button>
-              <button className="icon-btn" title="emoji"><i className="fa fa-smile-o"></i></button>
+              <button className="icon-btn" title="傳送檔案"><i className="fa fa-paperclip"/></button>
+              <button className="icon-btn" title="emoji"><i className="fa fa-smile-o"/></button>
             </div>
           </div>
         </div>

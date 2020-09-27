@@ -1,4 +1,4 @@
-import React, { createRef }from "react";
+import React, { createRef, useContext }from "react";
 import "./index.scss";
 import style from "./chatList.module.scss"
 import { AuthContext } from "../../Auth";
@@ -32,8 +32,7 @@ function HandlerDate(d) {
 const ChatSummary = (props) => {
   const chat = props.chat;
   const date = HandlerDate(chat.last_msg_id);
-  chat.unread = 2;
-  chat.last_msg = "this is test this is test  this is test";
+  console.log(chat);
 
   return (
     <li className={style.item} onClick={props.onClick}>
@@ -60,13 +59,18 @@ class ChatList extends React.Component{
     super(props);
     this.state = {
       chats: [],
-      searchHeight: 0,
+      searchHeight: "auto",
       roomHeight: 0
     };
     this.search = createRef();
     this.GetChats = this.GetChats.bind(this);
+    this.UpdateDimensions = this.UpdateDimensions.bind(this);
   }
   componentDidMount() {
+    this.UpdateDimensions();
+    this.GetChats();
+  }
+  UpdateDimensions() {
     this.setState({
       searchHeight: this.search.current.clientHeight,
     }, function () {
@@ -76,52 +80,64 @@ class ChatList extends React.Component{
         }
       });
     });
-    this.GetChats();
   }
-  async GetChats() {
+  GetChats() {
     const { currentUser } = this.context;
+    const users = db.collection('users');
     const userChats = db.collection('userChats');
     const chats = db.collection('chats');
     const chatMessages = db.collection('chatMessages');
 
-    const _chats = await userChats.doc(currentUser.uid).get()
+    userChats.doc(currentUser.uid).get()
       .then(doc => {
         if (!doc.exists) return [];
         return Object.values(doc.data());
-      });
-
-    chats.orderBy("last_msg_id", "desc").get()
-      .then(querySnapshot => {
-        const _chat_group = [];
-
-        querySnapshot.forEach(async doc => {
-          const messages = chatMessages.doc(doc.id).collection("messages");
-
-          const msg = () => {
-            messages.orderBy("created", "desc").limit(1).get()
-              .then(res => {
-                let _msg;
-                res.forEach(msg => {
-                  _msg = msg.data();
-                });
-                return _msg;
-              });
-          };
-
-          if (_chats.includes(doc.id)) {
-            _chat_group.push({
-              id: doc.id,
-              last_msg: await msg(),
-              ...doc.data()
-            });
-          }
-        });
-        return _chat_group;
       })
-      .then(chats => {
-        this.setState({
-          chats: chats
-        });
+      .then(_chats => {
+        chats.orderBy("last_msg_id", "desc").get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const messages = chatMessages.doc(doc.id).collection("messages");
+              const target = doc.data().members.filter(person => person !== currentUser.uid)[0];
+              if (_chats.includes(doc.id)) {
+                users.doc(target).get()
+                  .then(uDoc => {
+                    if (uDoc.exists) {
+                      const user = uDoc.data();
+                      return {
+                        name: user.nickname,
+                        avatar: user.avatar.url
+                      };
+                    }
+                  })
+                  .then(target => {
+                    messages.orderBy("created", "desc").limit(1).get()
+                      .then(Mdoc => {
+                        let _msg;
+                        if (Mdoc.exists) {
+                          Mdoc.forEach(msg => {
+                            _msg = msg.data();
+                          });
+                        } else {
+                          _msg = ""
+                        }
+
+                        this.setState(state => {
+                          return {
+                            chats: state.chats.concat([{
+                              ...doc.data(),
+                              name: target.name,
+                              avatar: target.avatar,
+                              id: doc.id,
+                              last_msg: _msg
+                            }])
+                          };
+                        })
+                      })
+                  })
+              }
+            });
+          })
       });
   }
   render() {
