@@ -1,21 +1,27 @@
 @import "../../sass/var";
 
-.chat-space {
-  width: 100%;
-  float: left;
-  border-left: 1px solid $gray-300;
-  &-header {
-    padding: .4rem 1rem;
-    border-bottom: 1px solid $gray-300;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
+.chat-space-header {
+  padding: .4rem 1rem;
+  border-bottom: 1px solid $gray-300;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgba(white, .5);
+
 }
+
+.user-name {
+  margin-bottom: 0;
+  letter-spacing: .1rem;
+}
+
 .dialogue {
   padding: 1.5rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
+
 .dialog {
   display: flex;
   align-items: flex-start;
@@ -63,10 +69,13 @@
     justify-content: flex-start;
     > {
       .say {
-        background-color: #EFEFEE;
+        background-color: white;
         margin-left: 1.6rem;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 1px -2px,
+                    rgba(0, 0, 0, 0.12) 0px 2px 2px 0px,
+                    rgba(0, 0, 0, 0.08) 0px 1px 5px 0px;
         &::before {
-          border-color: transparent #EFEFEE transparent transparent;
+          border-color: transparent white transparent transparent;
           border-width: 0 1rem 1rem 0;
           left: 0;
           transform: translateX(-95%);
@@ -81,10 +90,10 @@
     flex-direction: row-reverse;
     > {
       .say {
-        background-color: $purple-200;
+        background-color: #D8DCE7;
         margin-right: 1.6rem;
         &::before {
-          border-color: transparent transparent transparent $purple-200;
+          border-color: transparent transparent transparent #D8DCE7;
           border-width: 0 0 1rem 1rem;
           right: 0;
           transform: translateX(95%);
@@ -92,6 +101,7 @@
       }
       .states {
         margin-right: .4rem;
+        text-align: right;
       }
     }
   }
@@ -99,6 +109,7 @@
 
 .chat-input {
   border-top: 1px solid $gray-300;
+  background-color: rgba(white, .7);
   &-field {
     textarea {
       line-height: 1.5;
@@ -107,6 +118,7 @@
       padding: 1.5rem;
       resize: none;
       display: block;
+      background-color: transparent;
       &:focus {
         outline-width: 0;
       }
@@ -132,26 +144,20 @@
   }
 }
 
-@media only screen and (min-width: 640px) {
-  .chat-space {
-    display: block;
-    float: none;
-  }
-}
-
 @media only screen and (min-width: 768px) {
-  .chat-space {
-    &-header {
-      padding: 1.5rem;
-      .icon-btn {
-        display: none;
-        align-self: flex-end;
-      }
+  .chat-space-header {
+    padding: 1.5rem;
+    .icon-btn {
+      display: none;
+      align-self: flex-end;
     }
   }
 }
 
 @media only screen and (max-width: 767px) {
+  .user-name {
+    font-size: 1.8rem;
+  }
   .chat-input {
     display: flex;
     &-field {

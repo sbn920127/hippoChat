@@ -23,7 +23,7 @@
     position: absolute;
     left: -10%;
     top: -10%;
-    background-color: $purple-500;
+    background-color: $primary;
     transform: scaleY(1);
     transform-origin: top;
     opacity: 0;
@@ -37,7 +37,7 @@
     position: absolute;
     left: -10%;
     top: -10%;
-    background-color: $purple-500;
+    background-color: $primary;
     transform: scaleY(0);
     transform-origin: top;
     transition: transform .3s linear;
@@ -55,6 +55,6 @@
   }
   &:focus {
     outline-width: 0;
-    box-shadow: 0 0 0 .4rem $purple-300;
+    box-shadow: 0 0 0 .4rem rgba($secondary, .5);
   }
 }

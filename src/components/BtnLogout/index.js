@@ -13,6 +13,7 @@ const BtnLogout = (props) => {
           props.onClick();
         }
         auth.signOut();
+        alert('已登出');
       }}
     >
       登出

@@ -3,26 +3,43 @@ import { auth } from "./firebaseAPI";
 
 export const AuthContext = React.createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [padding, setPending] = useState(true);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setPending(false);
-    })
-  }, []);
-
-  if (padding) {
-    return <>Loading...</>
+class AuthProvider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setCurrentChatId = this.setCurrentChatId.bind(this);
+    this.state = {
+      currentUser: null,
+      currentChatId: null,
+      padding: true,
+      changeChatId: this.setCurrentChatId
+    };
   }
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      this.setState({
+        currentUser: user,
+        padding: false
+      })
+    })
+  }
+  setCurrentChatId(id) {
+    this.setState({
+      currentChatId: id
+    });
+  }
+  render() {
+    if (this.state.padding) {
+      return <>Loading...</>
+    }
 
-  return (
-    <AuthContext.Provider
-      value={{ currentUser }}
-    >
-      {children}
-    </AuthContext.Provider>
-  )
-};
+    return (
+      <AuthContext.Provider
+        value={this.state}
+      >
+        {this.props.children}
+      </AuthContext.Provider>
+    )
+  }
+}
+
+export default AuthProvider;

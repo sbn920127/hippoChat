@@ -9,12 +9,14 @@ class Members extends React.Component{
   static contextType = AuthContext;
   constructor(props) {
     super(props);
+    this.users = db.collection("users");
+    this.userChats = db.collection("userChats");
     this.state = {
       members: []
     };
     this.createChat = this.createChat.bind(this);
     this.getMembers = this.getMembers.bind(this);
-    this.users = db.collection("users");
+
   }
   componentDidMount() {
     this.users.get()
@@ -41,11 +43,11 @@ class Members extends React.Component{
     });
   }
   async createChat(id) {
-    const { currentUser } = this.context;
+    const { currentUser, changeChatId } = this.context;
+    const userChats = db.collection('userChats');
 
     if ( currentUser ) {
       const chats = db.collection('chats');
-      const userChats = db.collection('userChats');
       const myselfIsFirst = await userChats.doc(currentUser.uid).get()
         .then(doc => {
           if (!doc.exists) return false;
@@ -67,19 +69,24 @@ class Members extends React.Component{
         })
           .then(docRef => {
             const chatId = docRef.id;
-
             userChats.doc(currentUser.uid).set({
               [id]: chatId,
             }, {merge: true});
             userChats.doc(id).set({
               [currentUser.uid]: chatId,
             });
-
-            this.props.history.push('/chat');
+            changeChatId(chatId);
+            this.props.history.push(`/chat`);
           });
-
       } else {
-        this.props.history.push('/chat');
+        this.userChats.doc(currentUser.uid).get()
+          .then(doc => {
+            if (doc.exists) {
+              changeChatId(doc.data()[id]);
+              console.log(23, doc.data()[id]);
+              this.props.history.push("/chat");
+            }
+          });
       }
     } else {
       this.props.history.push('/login');
@@ -92,7 +99,7 @@ class Members extends React.Component{
       </div>
     ));
     return (
-      <main className="members bg-gray">
+      <main className="members bg-secondary">
         <div className="container">
           <div className="row">
             {_members}

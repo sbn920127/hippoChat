@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import style from "./index.module.scss";
 import BurgerMenuIcon from "../BtnBurgerMenu";
 import LogoutBtn from "../BtnLogout";
-import {AuthContext} from "../../Auth";
+import { AuthContext } from "../../Auth";
 
 const Menus = (props) => {
   const { currentUser } = useContext(AuthContext);

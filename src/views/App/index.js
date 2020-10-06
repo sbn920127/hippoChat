@@ -3,9 +3,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  useRouteMatch
 } from "react-router-dom";
 import "./index.scss";
-import { AuthProvider } from "../../Auth";
+import AuthProvider from "../../Auth";
 import PrivateRoute from "../../PrivateRoute";
 import Header from "../../components/Header";
 import LoginPage from "../LoginPage";
@@ -27,7 +28,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Members}/>
               <Route exact path="/login" component={LoginPage}/>
-              <PrivateRoute exact path="/chat" component={()=> <Chat header={this._header}/>}/>
+              <PrivateRoute exact path="/chat/" component={()=> <Chat header={this._header}/>}/>
               <PrivateRoute exact path="/account" component={Account} />
             </Switch>
           </>

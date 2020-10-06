@@ -2,7 +2,6 @@ import React, { createRef, useContext }from "react";
 import "./index.scss";
 import style from "./chatList.module.scss"
 import { AuthContext } from "../../Auth";
-import { db } from "../../firebaseAPI";
 import moment from "moment";
 
 function HandlerDate(d) {
@@ -30,12 +29,14 @@ function HandlerDate(d) {
 }
 
 const ChatSummary = (props) => {
+  const { currentChatId } = useContext(AuthContext);
   const chat = props.chat;
   const date = HandlerDate(chat.last_msg_id);
-  console.log(chat);
+  const _class = currentChatId === chat.id ? style['item-active'] : style.item;
+
 
   return (
-    <li className={style.item} onClick={props.onClick}>
+    <li className={_class} onClick={() => {props.onClick(chat.id)}}>
       <div className={style.summary}>
         <div className={style["summary-avatar"]}>
           <img src={chat.avatar} alt=""/>
@@ -58,17 +59,14 @@ class ChatList extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      chats: [],
       searchHeight: "auto",
       roomHeight: 0
     };
     this.search = createRef();
-    this.GetChats = this.GetChats.bind(this);
     this.UpdateDimensions = this.UpdateDimensions.bind(this);
   }
   componentDidMount() {
     this.UpdateDimensions();
-    this.GetChats();
   }
   UpdateDimensions() {
     this.setState({
@@ -81,106 +79,92 @@ class ChatList extends React.Component{
       });
     });
   }
-  GetChats() {
-    const { currentUser } = this.context;
-    const users = db.collection('users');
-    const userChats = db.collection('userChats');
-    const chats = db.collection('chats');
-    const chatMessages = db.collection('chatMessages');
-
-    userChats.doc(currentUser.uid).get()
-      .then(doc => {
-        if (!doc.exists) return [];
-        return Object.values(doc.data());
-      })
-      .then(_chats => {
-        chats.orderBy("last_msg_id", "desc").get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              const messages = chatMessages.doc(doc.id).collection("messages");
-              const target = doc.data().members.filter(person => person !== currentUser.uid)[0];
-              if (_chats.includes(doc.id)) {
-                users.doc(target).get()
-                  .then(uDoc => {
-                    if (uDoc.exists) {
-                      const user = uDoc.data();
-                      return {
-                        name: user.nickname,
-                        avatar: user.avatar.url
-                      };
-                    }
-                  })
-                  .then(target => {
-                    messages.orderBy("created", "desc").limit(1).get()
-                      .then(Mdoc => {
-                        let _msg;
-                        if (Mdoc.exists) {
-                          Mdoc.forEach(msg => {
-                            _msg = msg.data();
-                          });
-                        } else {
-                          _msg = ""
-                        }
-
-                        this.setState(state => {
-                          return {
-                            chats: state.chats.concat([{
-                              ...doc.data(),
-                              name: target.name,
-                              avatar: target.avatar,
-                              id: doc.id,
-                              last_msg: _msg
-                            }])
-                          };
-                        })
-                      })
-                  })
-              }
-            });
-          })
-      });
-  }
+  // GetChats() {
+  //   const { currentUser } = this.context;
+  //   const users = db.collection('users');
+  //   const userChats = db.collection('userChats');
+  //   const chats = db.collection('chats');
+  //   const chatMessages = db.collection('chatMessages');
+  //   let first;
+  //
+  //   userChats.doc(currentUser.uid).get()
+  //     .then(doc => {
+  //       if (!doc.exists) return [];
+  //       return Object.values(doc.data());
+  //     })
+  //     .then(_chats => {
+  //       chats.orderBy("last_msg_id", "desc").get()
+  //         .then(querySnapshot => {
+  //           querySnapshot.forEach(doc => {
+  //
+  //             const messages = chatMessages.doc(doc.id).collection("messages");
+  //             const target = doc.data().members.filter(person => person !== currentUser.uid)[0];
+  //             if (_chats.includes(doc.id)) {
+  //               if (!first) {
+  //                 first = doc.id;
+  //                 this.props.getfirstChat(first);
+  //               }
+  //               users.doc(target).get()
+  //                 .then(uDoc => {
+  //                   if (uDoc.exists) {
+  //                     const user = uDoc.data();
+  //                     return {
+  //                       name: user.nickname,
+  //                       avatar: user.avatar.url
+  //                     };
+  //                   }
+  //                 })
+  //                 .then(target => {
+  //                   messages.orderBy("created", "desc").limit(1).get()
+  //                     .then(Mdoc => {
+  //                       let _msg;
+  //                       if (Mdoc.exists) {
+  //                         Mdoc.forEach(msg => {
+  //                           _msg = msg.data();
+  //                         });
+  //                       } else {
+  //                         _msg = ""
+  //                       }
+  //
+  //                       this.setState(state => {
+  //                         return {
+  //                           chats: state.chats.concat([{
+  //                             ...doc.data(),
+  //                             name: target.name,
+  //                             avatar: target.avatar,
+  //                             id: doc.id,
+  //                             last_msg: _msg
+  //                           }])
+  //                         };
+  //                       })
+  //                     })
+  //                 })
+  //             }
+  //           });
+  //         })
+  //     });
+  // }
   render() {
-    const _chats = [];
-    if (this.state.chats.length > 0) {
-      this.state.chats.forEach(chat => {
-        _chats.push(<ChatSummary key={chat.id} chat={chat} onClick={this.props.talking}/>)
-      });
-      return (
-        <section className={`chat-control ${this.props.className}`}>
-          <div className="chat-search" ref={this.search}>
-            <div className="input-field">
-              <label htmlFor="roomSearch">
-                搜尋
-                <i className="fa fa-search"></i>
-              </label>
-              <input id="roomSearch" type="text" />
-            </div>
-            <button className="icon-btn" title="排序"><i className="fa fa-sort"></i></button>
+    const _chats = this.props.chats.map(chat => <ChatSummary key={chat.id} chat={chat} onClick={this.props.talking}/>);
+    return (
+      <section className={`chat-control ${this.props.className}`}>
+        <div className="chat-search" ref={this.search}>
+          <div className="input-field">
+            <label htmlFor="roomSearch">
+              搜尋
+              <i className="fa fa-search"></i>
+            </label>
+            <input id="roomSearch" type="text" />
           </div>
-          <ul className={style.items} style={{height: this.state.roomHeight}}>
-            {_chats}
-          </ul>
-        </section>
-      )
-    } else {
-      return (
-        <section className={`chat-control ${this.props.className}`}>
-          <div className="chat-search" ref={this.search}>
-            <div className="input-field">
-              <label htmlFor="roomSearch">
-                搜尋
-                <i className="fa fa-search"></i>
-              </label>
-              <input id="roomSearch" type="text" />
-            </div>
-            <button className="icon-btn" title="排序"><i className="fa fa-sort"></i></button>
-          </div>
-          <ul className={style.items} style={{height: this.state.roomHeight}}>
-          </ul>
-        </section>
-      )
-    }
+          <button className="icon-btn" title="排序"><i className="fa fa-sort"></i></button>
+        </div>
+        <ul className={style.items} style={{height: this.state.roomHeight}}>
+          {_chats.length > 0 ? _chats :
+            <p className="text-center pt-5">找個人聊天吧！</p>
+          }
+        </ul>
+      </section>
+    )
   }
 }
 

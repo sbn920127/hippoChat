@@ -29,9 +29,9 @@ $input-bg: #F5F9F9;
     &:focus, &.writing {
       padding-top: 2.4rem;
       padding-bottom: 1rem;
-      outline-color: $purple-600;
+      outline-color: $primary;
       ~ .label {
-        color: $purple-700;
+        color: $primary;
         transform: scale(.8) translateY(-50%);
         transform-origin: top left;
       }
