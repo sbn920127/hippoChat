@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.scss";
-import { db, storage } from "../../firebaseAPI";
+import { db } from "../../firebaseAPI";
 import CardMember from "../../components/CardMember";
 import { AuthContext } from "../../Auth";
 
@@ -65,7 +65,10 @@ class Members extends React.Component{
           avatar: null,
           members: [currentUser.uid, id],
           last_msg_id: null,
-          unread: 0
+          unread: {
+            [currentUser.uid]: 0,
+            [id]: 0
+          }
         })
           .then(docRef => {
             const chatId = docRef.id;
@@ -74,17 +77,16 @@ class Members extends React.Component{
             }, {merge: true});
             userChats.doc(id).set({
               [currentUser.uid]: chatId,
-            });
+            }, {merge: true});
             changeChatId(chatId);
-            this.props.history.push(`/chat`);
+            this.props.history.push('/chat');
           });
       } else {
         this.userChats.doc(currentUser.uid).get()
           .then(doc => {
             if (doc.exists) {
               changeChatId(doc.data()[id]);
-              console.log(23, doc.data()[id]);
-              this.props.history.push("/chat");
+              this.props.history.push('/chat');
             }
           });
       }

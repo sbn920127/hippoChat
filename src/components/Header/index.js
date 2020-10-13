@@ -6,7 +6,7 @@ import LogoutBtn from "../BtnLogout";
 import { AuthContext } from "../../Auth";
 
 const Menus = (props) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, changeChatId } = useContext(AuthContext);
   if (currentUser) {
     return (
       <>
@@ -14,7 +14,10 @@ const Menus = (props) => {
           <Link
             to="/chat"
             className={style["nav-link"]}
-            onClick={props.onClick}
+            onClick={() => {
+              changeChatId("");
+              props.onClick();
+            }}
           >Chat</Link>
         </li>
         <li className={style["nav-item"]}>

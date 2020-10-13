@@ -2,8 +2,7 @@ import React, {createRef} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useRouteMatch
+  Route
 } from "react-router-dom";
 import "./index.scss";
 import AuthProvider from "../../Auth";
@@ -28,7 +27,8 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Members}/>
               <Route exact path="/login" component={LoginPage}/>
-              <PrivateRoute exact path="/chat/" component={()=> <Chat header={this._header}/>}/>
+              <PrivateRoute exact path="/chat/" props={{header: this._header}} component={Chat}/>
+              {/*<PrivateRoute exact path="/chat/" aa={this._header} component={()=> <Chat header={this._header}/>}/>*/}
               <PrivateRoute exact path="/account" component={Account} />
             </Switch>
           </>

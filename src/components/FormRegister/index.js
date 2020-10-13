@@ -1,8 +1,8 @@
 import React from "react";
 import "./index.scss";
 import { auth, db, storage } from "../../firebaseAPI";
-import { Formik, Form } from "formik";
-import {emailRequired, passwordRequired, required} from "../../tool/validate";
+import { Formik, Form, useFormikContext } from "formik";
+import {confirmPassword, emailRequired, passwordRequired, required} from "../../tool/validate";
 
 import TextField from "../TextField";
 import MainBtn from "../BtnMain";
@@ -19,7 +19,8 @@ const FormRegister = (props) => {
         initialValues={{
           nickname: '',
           email: '',
-          password: ''
+          password: '',
+          confirmPassword: ''
         }}
         onSubmit={async (values, {resetForm}) => {
           let { email, password, nickname } = values;
@@ -54,17 +55,17 @@ const FormRegister = (props) => {
           }
         }}
       >
-        <>
+        {({values}) => (
           <Form>
             <TextField label="暱稱/稱呼" name="nickname" type="text" validate={required} />
             <TextField label="Email" name="email" type="email" validate={emailRequired} />
             <TextField label="密碼" name="password" type="password" validate={passwordRequired}/>
+            <TextField label="確認密碼" name="confirmPassword" type="password" validate={(value) => confirmPassword(value, values.password)}/>
             <MainBtn text="註冊" type="submit"/>
           </Form>
-        </>
+        )}
       </Formik>
     </div>
-
   )
 };
 

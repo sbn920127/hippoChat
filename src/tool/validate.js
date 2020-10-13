@@ -30,3 +30,13 @@ export const required = (value) => {
   }
   return error;
 };
+
+export const confirmPassword = (value, password) => {
+  let error;
+  if (!value) {
+    error = '必填';
+  } else if (value !== password) {
+    error = "密碼不相符";
+  }
+  return error;
+};

@@ -20,6 +20,7 @@
   }
   .value {
     color: $primary;
+    word-break: break-all;
   }
   &-content {
     background-color: white;

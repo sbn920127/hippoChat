@@ -12,12 +12,16 @@ function HandlerDate(d) {
   const hours = now.diff(date, "hours");
   let result;
 
-  if (seconds <= 60) {
-    result = `${seconds}秒前`;
-  } else if (minutes <= 60) {
-    result = `${minutes}分鐘前`;
-  } else if (hours <= 24) {
-    result = date.format("H:mm:ss");
+  if (now.get('date') === date.get('date')) {
+    if (seconds === 0 || seconds === 1) {
+      result = `1秒前`;
+    } else if (seconds <= 60) {
+      result = `${seconds}秒前`;
+    } else if (minutes <= 60) {
+      result = `${minutes}分鐘前`;
+    } else if (hours <= 24) {
+      result = date.format("H:mm");
+    }
   } else if (hours <= 48) {
     result = "昨天";
   } else if (hours <= 72) {
@@ -29,10 +33,12 @@ function HandlerDate(d) {
 }
 
 const ChatSummary = (props) => {
-  const { currentChatId } = useContext(AuthContext);
+  const { currentUser, currentChatId } = useContext(AuthContext);
   const chat = props.chat;
   const date = HandlerDate(chat.last_msg_id);
   const _class = currentChatId === chat.id ? style['item-active'] : style.item;
+  const id = currentUser.uid;
+
 
 
   return (
@@ -47,7 +53,7 @@ const ChatSummary = (props) => {
         <p className={style["summary-text"]}>{chat.last_msg}</p>
         <div className={style.col}>
           <div className={style.date}>{date}</div>
-          {chat.unread > 0 ? <span className={style.unread}>{chat.unread}</span> : null}
+          {chat.unread[id] > 0 ? <span className={style.unread}>{chat.unread[id]}</span> : null}
         </div>
       </div>
     </li>
@@ -60,13 +66,23 @@ class ChatList extends React.Component{
     super(props);
     this.state = {
       searchHeight: "auto",
-      roomHeight: 0
+      roomHeight: 0,
+      padding: false
     };
     this.search = createRef();
     this.UpdateDimensions = this.UpdateDimensions.bind(this);
   }
   componentDidMount() {
-    this.UpdateDimensions();
+    window.addEventListener('resize', this.UpdateDimensions);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.headerHeight !== nextProps.headerHeight) {
+      this.UpdateDimensions();
+    }
+    return true;
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.UpdateDimensions);
   }
   UpdateDimensions() {
     this.setState({
@@ -79,73 +95,9 @@ class ChatList extends React.Component{
       });
     });
   }
-  // GetChats() {
-  //   const { currentUser } = this.context;
-  //   const users = db.collection('users');
-  //   const userChats = db.collection('userChats');
-  //   const chats = db.collection('chats');
-  //   const chatMessages = db.collection('chatMessages');
-  //   let first;
-  //
-  //   userChats.doc(currentUser.uid).get()
-  //     .then(doc => {
-  //       if (!doc.exists) return [];
-  //       return Object.values(doc.data());
-  //     })
-  //     .then(_chats => {
-  //       chats.orderBy("last_msg_id", "desc").get()
-  //         .then(querySnapshot => {
-  //           querySnapshot.forEach(doc => {
-  //
-  //             const messages = chatMessages.doc(doc.id).collection("messages");
-  //             const target = doc.data().members.filter(person => person !== currentUser.uid)[0];
-  //             if (_chats.includes(doc.id)) {
-  //               if (!first) {
-  //                 first = doc.id;
-  //                 this.props.getfirstChat(first);
-  //               }
-  //               users.doc(target).get()
-  //                 .then(uDoc => {
-  //                   if (uDoc.exists) {
-  //                     const user = uDoc.data();
-  //                     return {
-  //                       name: user.nickname,
-  //                       avatar: user.avatar.url
-  //                     };
-  //                   }
-  //                 })
-  //                 .then(target => {
-  //                   messages.orderBy("created", "desc").limit(1).get()
-  //                     .then(Mdoc => {
-  //                       let _msg;
-  //                       if (Mdoc.exists) {
-  //                         Mdoc.forEach(msg => {
-  //                           _msg = msg.data();
-  //                         });
-  //                       } else {
-  //                         _msg = ""
-  //                       }
-  //
-  //                       this.setState(state => {
-  //                         return {
-  //                           chats: state.chats.concat([{
-  //                             ...doc.data(),
-  //                             name: target.name,
-  //                             avatar: target.avatar,
-  //                             id: doc.id,
-  //                             last_msg: _msg
-  //                           }])
-  //                         };
-  //                       })
-  //                     })
-  //                 })
-  //             }
-  //           });
-  //         })
-  //     });
-  // }
   render() {
     const _chats = this.props.chats.map(chat => <ChatSummary key={chat.id} chat={chat} onClick={this.props.talking}/>);
+
     return (
       <section className={`chat-control ${this.props.className}`}>
         <div className="chat-search" ref={this.search}>

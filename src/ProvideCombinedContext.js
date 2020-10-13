@@ -3,7 +3,7 @@ import { AuthContext, ChatContext, ContextCombined } from "./Context";
 import { auth } from "./firebaseAPI";
 
 const ProvideCombinedContext = props => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [setCurrentUser] = useState(null);
   const [padding, setPending] = useState(true);
 
   useEffect(() => {
@@ -12,7 +12,6 @@ const ProvideCombinedContext = props => {
       setPending(false);
     })
   }, []);
-  console.log(currentUser);
 
   if (padding) {
     return <>Loading...</>
@@ -21,7 +20,6 @@ const ProvideCombinedContext = props => {
   return (
     <AuthContext.Consumer>
       {({ currentUser }) => {
-        console.log(currentUser, "pro");
         return (<ChatContext.Consumer>
           {({currentChatId, setCurrentChatId}) => (
             <ContextCombined.Provider value={{currentUser, currentChatId, setCurrentChatId}}>

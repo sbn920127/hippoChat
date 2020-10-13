@@ -40,10 +40,10 @@ const EditArea = (props) => {
   } else {
     return (
       <>
-        <div className="col-4">
+        <div className="col-3">
           <p className="label">稱呼</p>
         </div>
-        <div className="col-8 nickname">
+        <div className="col-9 nickname">
           <p className="value pr-4">{props.nickname ? props.nickname : "nobody"}</p>
           <button className="btn btn-sm" onClick={props.onClick}>編輯</button>
         </div>
@@ -96,10 +96,10 @@ class Account extends React.Component{
               <EditArea nickname={this.state.nickname} getUserInfo={this.getUserInfo} isEdit={this.state.isEdit} onClick={this.handlerClick} />
             </div>
             <div className="row">
-              <div className="col-4">
+              <div className="col-3">
                 <p className="label">Email</p>
               </div>
-              <div className="col-8">
+              <div className="col-9">
                 <p className="value">{this.state.email}</p>
               </div>
             </div>
