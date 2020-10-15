@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/hippoChat/static/css/main.0fa41654.chunk.css",
-    "main.js": "/hippoChat/static/js/main.c81be6cc.chunk.js",
-    "main.js.map": "/hippoChat/static/js/main.c81be6cc.chunk.js.map",
+    "main.js": "/hippoChat/static/js/main.3acb21bb.chunk.js",
+    "main.js.map": "/hippoChat/static/js/main.3acb21bb.chunk.js.map",
     "runtime-main.js": "/hippoChat/static/js/runtime-main.07568d10.js",
     "runtime-main.js.map": "/hippoChat/static/js/runtime-main.07568d10.js.map",
     "static/js/2.528fa7a9.chunk.js": "/hippoChat/static/js/2.528fa7a9.chunk.js",
     "static/js/2.528fa7a9.chunk.js.map": "/hippoChat/static/js/2.528fa7a9.chunk.js.map",
     "index.html": "/hippoChat/index.html",
-    "precache-manifest.992224b4eac1bd79f63e067846739d05.js": "/hippoChat/precache-manifest.992224b4eac1bd79f63e067846739d05.js",
+    "precache-manifest.73148e9111a8a764b95774a8c4a74cf1.js": "/hippoChat/precache-manifest.73148e9111a8a764b95774a8c4a74cf1.js",
     "service-worker.js": "/hippoChat/service-worker.js",
     "static/css/main.0fa41654.chunk.css.map": "/hippoChat/static/css/main.0fa41654.chunk.css.map",
     "static/js/2.528fa7a9.chunk.js.LICENSE.txt": "/hippoChat/static/js/2.528fa7a9.chunk.js.LICENSE.txt",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.07568d10.js",
     "static/js/2.528fa7a9.chunk.js",
     "static/css/main.0fa41654.chunk.css",
-    "static/js/main.c81be6cc.chunk.js"
+    "static/js/main.3acb21bb.chunk.js"
   ]
 }
