@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/hippoChat/precache-manifest.992224b4eac1bd79f63e067846739d05.js"
+  "/hippoChat/precache-manifest.a3a5dc3180673cbf06da2154bd7f69fa.js"
 );
 
 self.addEventListener('message', (event) => {
