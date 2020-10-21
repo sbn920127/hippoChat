@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b00152e4317c67b096513bb0d00d52e6",
+    "revision": "70a8514c6ae7eafa6c52eff020a5cec5",
     "url": "/hippoChat/index.html"
   },
   {
-    "revision": "af0ae70f3077c0d9e1b3",
-    "url": "/hippoChat/static/css/main.0fa41654.chunk.css"
+    "revision": "3c6e8d2354caad16124d",
+    "url": "/hippoChat/static/css/main.51992eab.chunk.css"
   },
   {
     "revision": "16a3ca4b22f5eda866eb",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/hippoChat/static/js/2.528fa7a9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "af0ae70f3077c0d9e1b3",
+    "revision": "3c6e8d2354caad16124d",
     "url": "/hippoChat/static/js/main.3acb21bb.chunk.js"
   },
   {
