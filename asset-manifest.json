@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/hippoChat/static/css/main.87f8d279.chunk.css",
-    "main.js": "/hippoChat/static/js/main.3acb21bb.chunk.js",
-    "main.js.map": "/hippoChat/static/js/main.3acb21bb.chunk.js.map",
+    "main.css": "/hippoChat/static/css/main.f60de7a6.chunk.css",
+    "main.js": "/hippoChat/static/js/main.e08add6c.chunk.js",
+    "main.js.map": "/hippoChat/static/js/main.e08add6c.chunk.js.map",
     "runtime-main.js": "/hippoChat/static/js/runtime-main.07568d10.js",
     "runtime-main.js.map": "/hippoChat/static/js/runtime-main.07568d10.js.map",
     "static/js/2.528fa7a9.chunk.js": "/hippoChat/static/js/2.528fa7a9.chunk.js",
     "static/js/2.528fa7a9.chunk.js.map": "/hippoChat/static/js/2.528fa7a9.chunk.js.map",
     "index.html": "/hippoChat/index.html",
-    "precache-manifest.f93962645ab9b6d77d8e2ec9248ad0cd.js": "/hippoChat/precache-manifest.f93962645ab9b6d77d8e2ec9248ad0cd.js",
+    "precache-manifest.685f9f540b17388d47c5051b8a037478.js": "/hippoChat/precache-manifest.685f9f540b17388d47c5051b8a037478.js",
     "service-worker.js": "/hippoChat/service-worker.js",
-    "static/css/main.87f8d279.chunk.css.map": "/hippoChat/static/css/main.87f8d279.chunk.css.map",
+    "static/css/main.f60de7a6.chunk.css.map": "/hippoChat/static/css/main.f60de7a6.chunk.css.map",
     "static/js/2.528fa7a9.chunk.js.LICENSE.txt": "/hippoChat/static/js/2.528fa7a9.chunk.js.LICENSE.txt",
     "static/media/facebook-f-brands.svg": "/hippoChat/static/media/facebook-f-brands.53757d93.svg",
     "static/media/github-brands.svg": "/hippoChat/static/media/github-brands.ec5bc1b3.svg",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.07568d10.js",
     "static/js/2.528fa7a9.chunk.js",
-    "static/css/main.87f8d279.chunk.css",
-    "static/js/main.3acb21bb.chunk.js"
+    "static/css/main.f60de7a6.chunk.css",
+    "static/js/main.e08add6c.chunk.js"
   ]
 }
